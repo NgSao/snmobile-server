@@ -1,0 +1,76 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update 
+    show-sql: true       
+    database: mysql
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+  data:
+    web:
+      pageable:
+        default-page-size: 10
+        max-page-size: 100
+        default-page-number: 0
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+jwt:
+  secret: ${JWT_SECRET}
+
+admin:
+  gmail: ${ADMIN_GMAIL}
+  name: ${ADMIN_NAME}
+  password: ${ADMIN_PASSWORD}
+
+
+
+github:
+  token: ${GITHUB_TOKEN}
+  reopo: ${REPO_NAME}
+  branch: ${BRANCH}
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+        oauth2: DEBUG
+        web: DEBUG
+    root: INFO
+    com.dailyve_stc: DEBUG
+  file:
+    name: logs/log-app.log
