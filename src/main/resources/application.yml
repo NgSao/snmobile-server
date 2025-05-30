@@ -71,6 +71,6 @@ logging:
         oauth2: DEBUG
         web: DEBUG
     root: INFO
-    com.dailyve_stc: DEBUG
+    com.snd: DEBUG
   file:
     name: logs/log-app.log
