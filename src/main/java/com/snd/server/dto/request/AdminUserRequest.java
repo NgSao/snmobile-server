@@ -1,13 +1,8 @@
 package com.snd.server.dto.request;
 
-import java.time.Instant;
-import java.util.HashSet;
 import java.util.Set;
 
-import com.snd.server.enums.GenderEnum;
-import com.snd.server.enums.UserStatusEnum;
-import com.snd.server.model.Role;
-import com.snd.server.model.Session;
+import com.snd.server.enums.RoleEnum;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -27,14 +22,8 @@ public class AdminUserRequest {
     String fullName;
     String email;
     String phone;
-    String avatar;
-    GenderEnum gender;
-    Instant dateOfBirth;
-    String address;
-    UserStatusEnum userStatus;
-    Role role;
-
-    @Builder.Default
-    Set<Session> sessions = new HashSet<>();
+    String password;
+    RoleEnum roleEnum;
+    Set<AddressRequest> address;
 
 }

@@ -6,8 +6,6 @@ import java.util.Set;
 
 import com.snd.server.enums.GenderEnum;
 import com.snd.server.enums.UserStatusEnum;
-import com.snd.server.model.Role;
-import com.snd.server.model.Session;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,17 +22,21 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CustomerUserResponse {
+    String id;
     String fullName;
-    String email;
     String phone;
-    String avatar;
+    String email;
+    String profileImageUrl;
+
     GenderEnum gender;
-    Instant dateOfBirth;
-    Integer agencyLimit;
+    Instant birthday;
+    Instant lastLoginDate;
+    Instant createdAt;
+
     UserStatusEnum userStatus;
-    Role role;
+    String role;
 
     @Builder.Default
-    Set<Session> sessions = new HashSet<>();
+    Set<AddressResponse> addresses = new HashSet<>();
 
 }

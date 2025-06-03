@@ -37,6 +37,10 @@ public class Session {
     @Column(columnDefinition = "TEXT")
     String payload;
 
+    String address;
+    Double latitude;
+    Double longitude;
+
     boolean flag;
 
     @Column(name = "last_activity", nullable = false)

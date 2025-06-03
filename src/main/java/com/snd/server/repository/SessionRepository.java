@@ -13,4 +13,8 @@ public interface SessionRepository extends JpaRepository<Session, Long> {
 
     Optional<Session> findByPayload(String payload);
 
+    List<Session> findAllByPayload(String payload);
+
+    List<Session> findAllByUserId(String userId);
+
 }

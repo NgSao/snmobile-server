@@ -65,8 +65,8 @@ public class SecurityConfig {
                         .hasAnyAuthority(RoleConstant.ROLE_NHAN_VIEN_KHO, RoleConstant.ROLE_QUAN_LY_CUA_HANG,
                                 RoleConstant.ROLE_ADMIN)
 
-                        .requestMatchers(SecurityConstant.KHACH_HANG_URLS)
-                        .hasAnyAuthority(RoleConstant.ROLE_KHACH_HANG, RoleConstant.ROLE_ADMIN)
+                        // .requestMatchers(SecurityConstant.KHACH_HANG_URLS)
+                        // .hasAnyAuthority(RoleConstant.ROLE_KHACH_HANG, RoleConstant.ROLE_ADMIN)
 
                         .requestMatchers(SecurityConstant.PUBLIC_URLS).permitAll()
                         .anyRequest().authenticated())

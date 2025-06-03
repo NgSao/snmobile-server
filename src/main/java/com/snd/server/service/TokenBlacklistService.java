@@ -26,5 +26,6 @@ public class TokenBlacklistService {
             session.setFlag(false);
             sessionRepository.save(session);
         });
+
     }
 }

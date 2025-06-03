@@ -37,4 +37,7 @@ public class AdminUserResponse {
     @Builder.Default
     Set<Session> sessions = new HashSet<>();
 
+    @Builder.Default
+    Set<AddressResponse> addresses = new HashSet<>();
+
 }
