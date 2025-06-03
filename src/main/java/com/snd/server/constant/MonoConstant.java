@@ -34,4 +34,9 @@ public class MonoConstant {
     // jwt
     public static final String UUID = "uuid";
 
+    // Address
+    public static final String ADDRESS_NOT_FOUND = "Không tìm thấy địa chỉ.";
+    public static final String ADDRESS_NOT_BELONG_TO_USER = "Địa chỉ không thuộc về người dùng.";
+    public static final String ADDRESS_NOT_BELONG_TO_USER_OR_USER_NOT_LINKED = "Địa chỉ không thuộc về người dùng hoặc người dùng không được liên kết.";
+
 }

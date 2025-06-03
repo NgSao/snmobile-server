@@ -7,10 +7,11 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @ToString
-public enum GenderEnum {
-    MALE("Nam"),
-    FEMALE("Nữ"),
+public enum AddressTypeEnum {
+    HOME("Nhà riêng"),
+    OFFICE("Văn phòng"),
+    COMPANY("Công ty"),
     OTHER("Khác");
 
-    private final String genderName;
+    private final String typeName;
 }

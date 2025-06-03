@@ -26,9 +26,5 @@ public class ApiPathConstant {
     public static final String ADMIN_USER_SEARCH = "/admin/users/search";
 
     // User
-    public static final String USER_PROFILE = "/user/profile";
-    public static final String USER_UPDATE_PROFILE = "/user/update-profile";
-    public static final String USER_CHANGE_PASSWORD = "/user/change-password";
-    public static final String USER_UPDATE_AVATAR = "/user/update-avatar";
 
 }
