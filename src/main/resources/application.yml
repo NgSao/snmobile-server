@@ -57,6 +57,12 @@ github:
   reopo: ${REPO_NAME}
   branch: ${BRANCH}
 
+map:
+  token: ${OPENCAGE_API_KEY}
+
+ghn:
+  token: ${GHN_TOKEN}
+
 springdoc:
   api-docs:
     enabled: true
@@ -71,6 +77,6 @@ logging:
         oauth2: DEBUG
         web: DEBUG
     root: INFO
-    com.dailyve_stc: DEBUG
+    com.snd: DEBUG
   file:
     name: logs/log-app.log
