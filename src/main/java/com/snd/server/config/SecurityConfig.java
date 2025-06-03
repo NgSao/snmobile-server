@@ -50,24 +50,25 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(c -> c.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(SecurityConstant.ADMIN_URLS).hasAuthority(RoleConstant.ROLE_ADMIN)
-
                         .requestMatchers(SecurityConstant.QUAN_LY_CUA_HANG_URLS)
-                        .hasAuthority(RoleConstant.ROLE_QUAN_LY_CUA_HANG)
+                        .hasAnyAuthority(RoleConstant.ROLE_QUAN_LY_CUA_HANG, RoleConstant.ROLE_ADMIN)
 
                         .requestMatchers(SecurityConstant.NHAN_VIEN_BAN_HANG_URLS)
-                        .hasAnyAuthority(RoleConstant.ROLE_NHAN_VIEN_BAN_HANG, RoleConstant.ROLE_QUAN_LY_CUA_HANG)
+                        .hasAnyAuthority(RoleConstant.ROLE_NHAN_VIEN_BAN_HANG, RoleConstant.ROLE_QUAN_LY_CUA_HANG,
+                                RoleConstant.ROLE_ADMIN)
 
                         .requestMatchers(SecurityConstant.CHAM_SOC_KHACH_HANG_URLS)
-                        .hasAnyAuthority(RoleConstant.ROLE_CHAM_SOC_KHACH_HANG, RoleConstant.ROLE_QUAN_LY_CUA_HANG)
+                        .hasAnyAuthority(RoleConstant.ROLE_CHAM_SOC_KHACH_HANG, RoleConstant.ROLE_QUAN_LY_CUA_HANG,
+                                RoleConstant.ROLE_ADMIN)
 
                         .requestMatchers(SecurityConstant.KHACH_HANG_URLS)
-                        .hasAnyAuthority(RoleConstant.ROLE_NHAN_VIEN_KHO, RoleConstant.ROLE_QUAN_LY_CUA_HANG)
+                        .hasAnyAuthority(RoleConstant.ROLE_NHAN_VIEN_KHO, RoleConstant.ROLE_QUAN_LY_CUA_HANG,
+                                RoleConstant.ROLE_ADMIN)
 
-                        .requestMatchers(SecurityConstant.KHACH_HANG_URLS).hasAuthority(RoleConstant.ROLE_KHACH_HANG)
+                        .requestMatchers(SecurityConstant.KHACH_HANG_URLS)
+                        .hasAnyAuthority(RoleConstant.ROLE_KHACH_HANG, RoleConstant.ROLE_ADMIN)
 
                         .requestMatchers(SecurityConstant.PUBLIC_URLS).permitAll()
-
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))

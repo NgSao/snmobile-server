@@ -6,8 +6,8 @@ public class RabbitMqConstant {
     public static final String OTP_QUEUE = "otp.queue";
     public static final String OTP_ROUTING_KEY = "otp.event";
 
-    public static final String FILE_EXCHANGE = "file.exchange";
-    public static final String FILE_QUEUE = "file.queue";
-    public static final String FILE_ROUTING_KEY = "file.event";
+    public static final String CONFIG_EXCHANGE = "config.exchange";
+    public static final String CONFIG_QUEUE = "config.queue";
+    public static final String CONFIG_ROUTING_KEY = "config.event";
 
 }

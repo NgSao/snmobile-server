@@ -1,4 +1,4 @@
-package com.snd.server.dto;
+package com.snd.server.dto.request;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -23,7 +23,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDto {
+public class AdminUserRequest {
     String fullName;
     String email;
     String phone;
@@ -31,7 +31,6 @@ public class UserDto {
     GenderEnum gender;
     Instant dateOfBirth;
     String address;
-    Integer agencyLimit;
     UserStatusEnum userStatus;
     Role role;
 

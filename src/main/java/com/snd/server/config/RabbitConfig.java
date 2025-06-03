@@ -13,6 +13,7 @@ import com.snd.server.constant.RabbitMqConstant;
 @Configuration
 public class RabbitConfig {
 
+    // Otp
     @Bean
     public TopicExchange otpExchange() {
         return new TopicExchange(RabbitMqConstant.OTP_EXCHANGE);

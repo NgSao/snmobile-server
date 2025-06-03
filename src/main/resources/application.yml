@@ -57,6 +57,12 @@ github:
   reopo: ${REPO_NAME}
   branch: ${BRANCH}
 
+map:
+  token: ${OPENCAGE_API_KEY}
+
+ghn:
+  token: ${GHN_TOKEN}
+
 springdoc:
   api-docs:
     enabled: true

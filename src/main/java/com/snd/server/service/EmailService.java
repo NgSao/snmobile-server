@@ -41,11 +41,11 @@ public class EmailService {
                     "<body>" +
                     "<div style='max-width:800px;margin: auto;'>" +
                     "<div class='header'>" +
-                    "<h1 style='color: #FFF'>MinhTuan <span style='color:#000'>Mobile</span></h1>" +
+                    "<h1 style='color: #FFF'>SN <span style='color:#000'>Mobile</span></h1>" +
                     "</div>" +
                     "<div class='container'>" +
                     "<p>Kính chào " + fullName
-                    + ",<br>MinhTuan Mobile gửi đến quý khách mã xác thực tài khoản.</p>" +
+                    + ",<br>SN Mobile gửi đến quý khách mã xác thực tài khoản.</p>" +
                     "<div style='margin-bottom: 30px;'>" +
                     "<div style='border-bottom: 3px solid #d70018;'>" +
                     "<h3 style='color: #d70018;'>MÃ XÁC THỰC</h3>" +
@@ -58,9 +58,9 @@ public class EmailService {
                     +
                     "</div>" +
                     "<div style='text-align: center; margin-top: 40px'>" +
-                    "<p>Chúc bạn luôn có những trải nghiệm tuyệt vời khi sử dụng dịch vụ tại MinhTuan Mobile.</p>" +
+                    "<p>Chúc bạn luôn có những trải nghiệm tuyệt vời khi sử dụng dịch vụ tại SN Mobile.</p>" +
                     "<p>Tổng đài hỗ trợ miễn phí: <span style='color:#d70018;'>0392445255</span></p>" +
-                    "<p>MinhTuan Mobile cảm ơn quý khách.</p>" +
+                    "<p>SN Mobile cảm ơn quý khách.</p>" +
                     "</div>" +
                     "</div>" +
                     "<div class='fotterne'></div>" +
@@ -96,11 +96,11 @@ public class EmailService {
                     "<body>" +
                     "<div style='max-width:800px;margin: auto;'>" +
                     "<div class='header'>" +
-                    "<h1 style='color: #FFF'>MinhTuan <span style='color:#000'>Mobile</span></h1>" +
+                    "<h1 style='color: #FFF'>SN <span style='color:#000'>Mobile</span></h1>" +
                     "</div>" +
                     "<div class='container'>" +
                     "<p>Kính chào " + fullName
-                    + ",<br>MinhTuan Mobile gửi đến quý kháchmật khẩu mới để đăng nhập tài khoản.</p>" +
+                    + ",<br>SN Mobile gửi đến quý kháchmật khẩu mới để đăng nhập tài khoản.</p>" +
                     "<div style='margin-bottom: 30px;'>" +
                     "<div style='border-bottom: 3px solid #d70018;'>" +
                     "<h3 style='color: #d70018;'>MẬT KHẨU MỚI</h3>" +
@@ -112,9 +112,9 @@ public class EmailService {
                     +
                     "</div>" +
                     "<div style='text-align: center; margin-top: 40px'>" +
-                    "<p>Chúc bạn luôn có những trải nghiệm tuyệt vời khi sử dụng dịch vụ tại MinhTuan Mobile.</p>" +
+                    "<p>Chúc bạn luôn có những trải nghiệm tuyệt vời khi sử dụng dịch vụ tại SN Mobile.</p>" +
                     "<p>Tổng đài hỗ trợ miễn phí: <span style='color:#d70018;'>0392445255</span></p>" +
-                    "<p>MinhTuan Mobile cảm ơn quý khách.</p>" +
+                    "<p>SN Mobile cảm ơn quý khách.</p>" +
                     "</div>" +
                     "</div>" +
                     "<div class='fotterne'></div>" +
@@ -151,11 +151,11 @@ public class EmailService {
                     "<body>" +
                     "<div style='max-width:800px;margin: auto;'>" +
                     "<div class='header'>" +
-                    "<h1 style='color: #FFF'>MinhTuan <span style='color:#000'>Mobile</span></h1>" +
+                    "<h1 style='color: #FFF'>SN <span style='color:#000'>Mobile</span></h1>" +
                     "</div>" +
                     "<div class='container'>" +
                     "<p>Kính chào " + fullName
-                    + ",<br>MinhTuan Mobile thông báo quý khách đã đặt lại mật khẩu thành công.</p>" +
+                    + ",<br>SN Mobile thông báo quý khách đã đặt lại mật khẩu thành công.</p>" +
                     "<div style='margin-bottom: 30px;'>" +
                     "<div style='border-bottom: 3px solid #d70018;'>" +
                     "<h3 style='color: #d70018;'>XÁC NHẬN ĐẶT LẠI MẬT KHẨU</h3>" +
@@ -168,9 +168,9 @@ public class EmailService {
                     "<p style='font-size: 12px; color: #888;'>Email này được gửi tự động, vui lòng không trả lời.</p>" +
                     "</div>" +
                     "<div style='text-align: center; margin-top: 40px'>" +
-                    "<p>Chúc bạn luôn có những trải nghiệm tuyệt vời khi sử dụng dịch vụ tại MinhTuan Mobile.</p>" +
+                    "<p>Chúc bạn luôn có những trải nghiệm tuyệt vời khi sử dụng dịch vụ tại SN Mobile.</p>" +
                     "<p>Tổng đài hỗ trợ miễn phí: <span style='color:#d70018;'>0392445255</span></p>" +
-                    "<p>MinhTuan Mobile cảm ơn quý khách.</p>" +
+                    "<p>SN Mobile cảm ơn quý khách.</p>" +
                     "</div>" +
                     "</div>" +
                     "<div class='fotterne'></div>" +

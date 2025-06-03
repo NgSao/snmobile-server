@@ -18,7 +18,6 @@ public class OtpEventListener {
     @RabbitListener(queues = RabbitMqConstant.OTP_QUEUE)
     public void handleOtpEvent(OtpEvent event) {
         try {
-
             switch (event.getEventType()) {
                 case REGISTER_OTP:
                     emailService.sendVerificationEmail(event.getFullName(), event.getEmail(), event.getOtp());

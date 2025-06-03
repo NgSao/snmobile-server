@@ -28,9 +28,6 @@ public class AuthRegisterRequest {
     @NotBlank(message = "Số điện thoại không được bỏ trống")
     String phone;
 
-    @NotBlank(message = "Địa chỉ không được bỏ trống")
-    String address;
-
     @NotBlank(message = "Mật khẩu không được bỏ trống")
     String password;
 

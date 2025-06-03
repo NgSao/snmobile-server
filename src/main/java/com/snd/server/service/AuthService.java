@@ -86,7 +86,6 @@ public class AuthService {
                 .fullName(request.getFullName())
                 .email(request.getEmail())
                 .phone(request.getPhone())
-                .address(request.getAddress())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .userStatus(UserStatusEnum.UNVERIFIED)
                 .role(role)
@@ -252,8 +251,8 @@ public class AuthService {
         AuthLoginResponse userLoginResponse = new AuthLoginResponse();
         userLoginResponse.setAccessToken(access_token);
         userLoginResponse.setEmail(request.getEmail());
-
-        user.setRememberToken(access_token);
+        user.setLastLoginDate(Instant.now());
+        user.setRefreshToken(access_token);
         userRepository.save(user);
 
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();

@@ -35,6 +35,11 @@ public class ServerApplication {
 		System.setProperty("GITHUB_TOKEN", dotenv.get("GITHUB_TOKEN"));
 		System.setProperty("REPO_NAME", dotenv.get("REPO_NAME"));
 		System.setProperty("BRANCH", dotenv.get("BRANCH"));
+
+		System.setProperty("OPENCAGE_API_KEY", dotenv.get("OPENCAGE_API_KEY"));
+
+		System.setProperty("GHN_TOKEN", dotenv.get("GHN_TOKEN"));
+
 		SpringApplication.run(ServerApplication.class, args);
 	}
 

@@ -18,7 +18,7 @@ public class FileService {
 
     @Value("${github.token}")
     private String githubToken;
-    @Value("${github.repo.name}")
+    @Value("${github.reopo}")
     private String repoName;
     @Value("${github.branch}")
     private String branch;

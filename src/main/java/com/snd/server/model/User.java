@@ -30,35 +30,25 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
 
-    @Column(name = "full_name", nullable = false, length = 255)
     String fullName;
 
-    @Column(name = "email", nullable = false, length = 255, unique = true)
     String email;
 
-    @Column(name = "phone", length = 20, unique = true)
+    String password;
+
     String phone;
 
-    @Column(name = "avatar", length = 255)
-    String avatar;
+    Instant birthday;
 
-    @Column(name = "password", nullable = false, length = 255)
-    String password;
+    String profileImageUrl;
+
+    Instant lastLoginDate;
 
     @Enumerated(EnumType.STRING)
     GenderEnum gender;
 
-    @Column(name = "date_of_birth")
-    Instant dateOfBirth;
-
-    @Column(name = "address", length = 355)
-    String address;
-
-    @Column(name = "agency_limit")
-    Integer agencyLimit;
-
     @Column(columnDefinition = "TEXT")
-    String rememberToken;
+    String refreshToken;
 
     @Enumerated(EnumType.STRING)
     UserStatusEnum userStatus;
@@ -77,5 +67,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     Set<Provider> providers = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    Set<Address> addresses = new HashSet<>();
 
 }
