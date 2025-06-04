@@ -9,6 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -50,6 +51,14 @@ public class SecurityConfig {
         httpSecurity
                 .csrf(c -> c.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET, SecurityConstant.QUAN_LY_CUA_HANG_URLS)
+                        .hasAnyAuthority(
+                                RoleConstant.ROLE_NHAN_VIEN_BAN_HANG,
+                                RoleConstant.ROLE_CHAM_SOC_KHACH_HANG,
+                                RoleConstant.ROLE_QUAN_LY_CUA_HANG,
+                                RoleConstant.ROLE_NHAN_VIEN_KHO,
+                                RoleConstant.ROLE_ADMIN)
+
                         .requestMatchers(SecurityConstant.QUAN_LY_CUA_HANG_URLS)
                         .hasAnyAuthority(RoleConstant.ROLE_QUAN_LY_CUA_HANG, RoleConstant.ROLE_ADMIN)
 
