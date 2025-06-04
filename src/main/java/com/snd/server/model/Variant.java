@@ -33,6 +33,7 @@ public class Variant extends BaseEntity {
     BigDecimal originalPrice;
 
     BigDecimal salePrice;
+    BigDecimal importPrice;
 
     Integer stockQuantity;
 

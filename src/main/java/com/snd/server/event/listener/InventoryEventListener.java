@@ -36,7 +36,7 @@ public class InventoryEventListener {
                 case INVENTORY_ORDER:
                     inventoryService.deductInventory(event);
                     break;
-                case INVENTORY_PRODUCT:
+                case PRODUCT_INVENTORY:
                     productService.updateProductInventory(event);
                     break;
 

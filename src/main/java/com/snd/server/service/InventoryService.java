@@ -1,10 +1,16 @@
 package com.snd.server.service;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import com.snd.server.dto.request.InventoryRequest;
+import com.snd.server.dto.response.InventoryResponse;
+import com.snd.server.event.EventType;
 import com.snd.server.event.domain.InventoryEvent;
+import com.snd.server.event.publisher.InventoryPublisher;
 import com.snd.server.exception.AppException;
 import com.snd.server.model.Inventory;
 import com.snd.server.model.Product;
@@ -19,12 +25,14 @@ public class InventoryService {
     private final InventoryRepository inventoryRepository;
     private final VariantRepository variantRepository;
     private final ProductRepository productRepository;
+    private final InventoryPublisher inventoryPublisher;
 
     public InventoryService(InventoryRepository inventoryRepository, VariantRepository variantRepository,
-            ProductRepository productRepository) {
+            ProductRepository productRepository, InventoryPublisher inventoryPublisher) {
         this.inventoryRepository = inventoryRepository;
         this.variantRepository = variantRepository;
         this.productRepository = productRepository;
+        this.inventoryPublisher = inventoryPublisher;
     }
 
     public void createInventory(InventoryEvent event) {
@@ -35,12 +43,12 @@ public class InventoryService {
         inventory.setSkuProduct(event.getSkuProduct());
         inventory.setSkuVariant(event.getSkuVariant());
         inventory.setQuantity(event.getQuantity());
+        inventory.setImportPrice(event.getPrice());
         inventory.setLastUpdated(Instant.now());
         inventoryRepository.save(inventory);
     }
 
     public void updateInventory(InventoryEvent event) {
-
         if (event.getQuantity() == null || event.getQuantity() < 0) {
             throw new AppException("Số lượng tồn kho không hợp lệ");
         }
@@ -52,6 +60,7 @@ public class InventoryService {
                         .orElseThrow(() -> new AppException(
                                 "Không tìm thấy tồn kho cho sản phẩm"));
         inventory.setQuantity(event.getQuantity());
+        inventory.setImportPrice(event.getPrice());
         inventory.setLastUpdated(Instant.now());
         inventoryRepository.save(inventory);
     }
@@ -71,11 +80,9 @@ public class InventoryService {
     }
 
     public void deductInventory(InventoryEvent event) {
-
         if (event.getQuantity() == null || event.getQuantity() < 0) {
             throw new AppException("Số lượng trừ tồn kho không hợp lệ");
         }
-
         Inventory inventory;
         Product product = null;
         if (event.getSkuVariant() != null) {
@@ -115,87 +122,122 @@ public class InventoryService {
 
     }
 
-    // public InventoryDto importInventory(InventoryRequest request) {
-    // if (request.getQuantity() == null || request.getQuantity() < 0) {
-    // throw new AppException(InventoryConstant.INVALID_IMPORT_STOCK_QUANTITY);
-    // }
-    // Inventory inventory;
-    // if (request.getSkuVariant() != null) {
-    // inventory = inventoryRepository.findBySkuVariant(request.getSkuVariant())
-    // .orElseGet(() -> {
-    // Inventory newInventory = new Inventory();
-    // newInventory.setSkuProduct(request.getSkuProduct());
-    // newInventory.setSkuVariant(request.getSkuVariant());
-    // newInventory.setQuantity(0);
-    // return newInventory;
-    // });
-    // } else {
-    // inventory =
-    // inventoryRepository.findBySkuProductAndSkuVariantIsNull(request.getSkuProduct())
-    // .orElseGet(() -> {
-    // Inventory newInventory = new Inventory();
-    // newInventory.setSkuProduct(request.getSkuProduct());
-    // newInventory.setSkuVariant(null);
-    // newInventory.setQuantity(0);
-    // return newInventory;
-    // });
-    // }
-    // inventory.setQuantity(inventory.getQuantity() + request.getQuantity());
-    // inventory.setLastUpdated(Instant.now());
-    // Inventory savedInventory = inventoryRepository.save(inventory);
-    // return mapToDto(savedInventory);
-    // }
+    public InventoryResponse importInventory(InventoryRequest request) {
+        if (request.getQuantity() == null || request.getQuantity() < 0) {
+            throw new AppException("Số lượng nhập kho không hợp lệ");
+        }
 
-    // public InventoryDto exportInventory(InventoryRequest request) {
-    // if (request.getQuantity() == null || request.getQuantity() < 0) {
-    // throw new AppException(InventoryConstant.INVALID_EXPORT_STOCK_QUANTITY);
-    // }
-    // Inventory inventory;
-    // if (request.getSkuVariant() != null) {
-    // inventory = inventoryRepository.findBySkuVariant(request.getSkuVariant())
-    // .orElseThrow(() -> new RuntimeException(
-    // InventoryConstant.STOCK_NOT_FOUND_VARIANT + request.getSkuVariant()));
-    // } else {
-    // inventory =
-    // inventoryRepository.findBySkuProductAndSkuVariantIsNull(request.getSkuProduct())
-    // .orElseThrow(() -> new RuntimeException(
-    // InventoryConstant.STOCK_NOT_FOUND_PRODUCT + request.getSkuVariant()));
-    // }
-    // int newQuantity = inventory.getQuantity() - request.getQuantity();
-    // if (newQuantity < 0) {
-    // throw new RuntimeException("Tồn kho không đủ");
-    // }
-    // inventory.setQuantity(newQuantity);
-    // inventory.setLastUpdated(Instant.now());
-    // Inventory savedInventory = inventoryRepository.save(inventory);
-    // return mapToDto(savedInventory);
-    // }
+        if (request.getSkuProduct() == null) {
+            throw new AppException("Thiếu mã sản phẩm (skuProduct)");
+        }
 
-    // public List<InventoryDto> getAllInventories(String sortByStock) {
-    // List<Inventory> inventories;
-    // switch (sortByStock.toLowerCase()) {
-    // case "instock":
-    // inventories = inventoryRepository.findAllByQuantityGreaterThan(0);
-    // break;
-    // case "outofstock":
-    // inventories = inventoryRepository.findAllByQuantityEquals(0);
-    // break;
-    // default:
-    // inventories = inventoryRepository.findAll();
-    // break;
-    // }
-    // return inventories.stream()
-    // .map(this::mapToDto)
-    // .collect(Collectors.toList());
-    // }
+        Inventory inventory;
 
-    // private InventoryDto mapToDto(Inventory inventory) {
-    // InventoryDto dto = new InventoryDto();
-    // dto.setId(inventory.getId());
-    // dto.setSkuProduct(inventory.getSkuProduct());
-    // dto.setSkuVariant(inventory.getSkuVariant());
-    // dto.setQuantity(inventory.getQuantity());
-    // dto.setLastUpdated(inventory.getLastUpdated());
-    // return dto;
-    // }
+        if (request.getSkuVariant() != null) {
+            inventory = inventoryRepository.findBySkuVariant(request.getSkuVariant())
+                    .orElseGet(() -> {
+                        Inventory newInventory = new Inventory();
+                        newInventory.setSkuProduct(request.getSkuProduct());
+                        newInventory.setSkuVariant(request.getSkuVariant());
+                        newInventory.setQuantity(request.getQuantity());
+                        newInventory.setImportPrice(request.getImportPrice());
+
+                        InventoryEvent inventoryEvent = InventoryEvent.builder()
+                                .eventType(EventType.PRODUCT_INVENTORY)
+                                .skuProduct(request.getSkuProduct())
+                                .skuVariant(null)
+                                .quantity(request.getQuantity())
+                                .price(request.getImportPrice())
+
+                                .build();
+                        inventoryPublisher.sendInventory(inventoryEvent);
+                        return newInventory;
+                    });
+        } else {
+            inventory = inventoryRepository.findBySkuProductAndSkuVariantIsNull(request.getSkuProduct())
+                    .orElseGet(() -> {
+                        Inventory newInventory = new Inventory();
+                        newInventory.setSkuProduct(request.getSkuProduct());
+                        newInventory.setSkuVariant(null);
+                        newInventory.setQuantity(request.getQuantity());
+                        newInventory.setImportPrice(request.getImportPrice());
+
+                        InventoryEvent inventoryEvent = InventoryEvent.builder()
+                                .eventType(EventType.PRODUCT_INVENTORY)
+                                .skuProduct(request.getSkuProduct())
+                                .skuVariant(null)
+                                .quantity(request.getQuantity())
+                                .price(request.getImportPrice())
+
+                                .build();
+                        inventoryPublisher.sendInventory(inventoryEvent);
+                        return newInventory;
+                    });
+        }
+
+        inventory.setQuantity(inventory.getQuantity() + request.getQuantity());
+        inventory.setLastUpdated(Instant.now());
+
+        Inventory savedInventory = inventoryRepository.save(inventory);
+        return mapToDto(savedInventory);
+    }
+
+    public InventoryResponse exportInventory(InventoryRequest request) {
+        if (request.getQuantity() == null || request.getQuantity() < 0) {
+            throw new AppException("Số lượng xuất kho không hợp lệ");
+        }
+        Inventory inventory;
+        if (request.getSkuVariant() != null) {
+            inventory = inventoryRepository.findBySkuVariant(request.getSkuVariant())
+                    .orElseThrow(() -> new AppException(
+                            "Không tìm thấy tồn kho cho biến thể"));
+        } else {
+            inventory = inventoryRepository.findBySkuProductAndSkuVariantIsNull(request.getSkuProduct())
+                    .orElseThrow(() -> new AppException(
+                            "Không tìm thấy tồn kho cho sản phẩm"));
+        }
+        int newQuantity = inventory.getQuantity() - request.getQuantity();
+        if (newQuantity < 0) {
+            throw new AppException("Tồn kho không đủ");
+        }
+        inventory.setQuantity(newQuantity);
+        inventory.setLastUpdated(Instant.now());
+        Inventory savedInventory = inventoryRepository.save(inventory);
+        return mapToDto(savedInventory);
+    }
+
+    public List<InventoryResponse> getAllInventories(String sortByStock) {
+        List<Inventory> inventories;
+        switch (sortByStock.toLowerCase()) {
+            case "instock":
+                inventories = inventoryRepository.findAllByQuantityGreaterThan(0);
+                break;
+            case "outofstock":
+                inventories = inventoryRepository.findAllByQuantityEquals(0);
+                break;
+            default:
+                inventories = inventoryRepository.findAll();
+                break;
+        }
+        return inventories.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    private InventoryResponse mapToDto(Inventory inventory) {
+        InventoryResponse dto = new InventoryResponse();
+        dto.setId(inventory.getId());
+        dto.setSkuProduct(inventory.getSkuProduct());
+        dto.setSkuVariant(inventory.getSkuVariant());
+        dto.setQuantity(inventory.getQuantity());
+        dto.setImportPrice(inventory.getImportPrice());
+        dto.setLastUpdated(inventory.getLastUpdated());
+        dto.setCreatedAt(inventory.getCreatedAt());
+        dto.setCreatedBy(inventory.getCreatedBy());
+        dto.setUpdatedAt(inventory.getUpdatedAt());
+        dto.setUpdatedBy(inventory.getUpdatedBy());
+        dto.setStatus(inventory.getStatus());
+        dto.setStatusName(inventory.getStatus().getStatusName());
+        return dto;
+    }
 }
