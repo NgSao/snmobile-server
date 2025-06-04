@@ -4,6 +4,7 @@ import com.snd.server.enums.GuardNameEnum;
 import com.snd.server.enums.ProviderEnum;
 import com.snd.server.enums.RoleEnum;
 import com.snd.server.enums.UserStatusEnum;
+import com.snd.server.exception.AppException;
 import com.snd.server.model.Role;
 import com.snd.server.model.User;
 import com.snd.server.repository.RoleRepository;
@@ -59,7 +60,7 @@ public class DataInitializer {
             long countUsers = userRepository.count();
             if (countUsers == 0) {
                 Role adminRole = roleRepository.findByName(RoleEnum.ROLE_ADMIN)
-                        .orElseThrow(() -> new RuntimeException("Role ROLE_ADMIN not found"));
+                        .orElseThrow(() -> new AppException("Role ROLE_ADMIN not found"));
 
                 User admin = User.builder()
                         .fullName(adminName)
@@ -74,6 +75,40 @@ public class DataInitializer {
                 logger.info("Created admin user with email: {}", admin.getEmail());
             } else {
                 logger.info("Skipping user initialization, {} users already exist", countUsers);
+            }
+
+            String managerEmail = "manager@gmail.com";
+            if (!userRepository.existsByEmail(managerEmail)) {
+                Role managerRole = roleRepository.findByName(RoleEnum.ROLE_QUAN_LY_CUA_HANG)
+                        .orElseThrow(() -> new AppException("ROLE_QUAN_LY_CUA_HANG not found"));
+
+                User manager = User.builder()
+                        .fullName("Manager")
+                        .email(managerEmail)
+                        .password(passwordEncoder.encode("manager123"))
+                        .userStatus(UserStatusEnum.ACTIVE)
+                        .provider(ProviderEnum.LOCAL)
+                        .role(managerRole)
+                        .build();
+                userRepository.save(manager);
+                logger.info("Created manager user: {}", manager.getEmail());
+            }
+
+            String staffEmail = "staff@gmail.com";
+            if (!userRepository.existsByEmail(staffEmail)) {
+                Role staffRole = roleRepository.findByName(RoleEnum.ROLE_NHAN_VIEN_BAN_HANG)
+                        .orElseThrow(() -> new RuntimeException("ROLE_NHAN_VIEN_BAN_HANG not found"));
+
+                User staff = User.builder()
+                        .fullName("Sales Staff")
+                        .email(staffEmail)
+                        .password(passwordEncoder.encode("staff123"))
+                        .userStatus(UserStatusEnum.ACTIVE)
+                        .provider(ProviderEnum.LOCAL)
+                        .role(staffRole)
+                        .build();
+                userRepository.save(staff);
+                logger.info("Created staff user: {}", staff.getEmail());
             }
 
             logger.info("Data initialization completed.");

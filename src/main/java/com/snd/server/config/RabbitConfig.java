@@ -29,6 +29,22 @@ public class RabbitConfig {
         return BindingBuilder.bind(otpQueue).to(otpExchange).with(RabbitMqConstant.OTP_ROUTING_KEY);
     }
 
+    // Inventory
+    @Bean
+    public TopicExchange inventoryExchange() {
+        return new TopicExchange(RabbitMqConstant.INVENTORY_EXCHANGE);
+    }
+
+    @Bean
+    public Queue inventoryQueue() {
+        return new Queue(RabbitMqConstant.INVENTORY_QUEUE, true);
+    }
+
+    @Bean
+    public Binding inventoryBinding(Queue inventoryQueue, TopicExchange inventoryExchange) {
+        return BindingBuilder.bind(inventoryQueue).to(inventoryExchange).with(RabbitMqConstant.INVENTORY_ROUTING_KEY);
+    }
+
     // Mono
     @Bean
     public MessageConverter jsonMessageConverter() {
