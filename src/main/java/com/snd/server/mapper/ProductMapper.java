@@ -143,18 +143,22 @@ public class ProductMapper {
         product.setSlug(SlugUtil.toSlug(request.getName()));
         product.setDescription(request.getDescription());
         product.setSpecification(request.getSpecification());
-        product.setOriginalPrice(request.getOriginalPrice());
-        product.setSalePrice(request.getSalePrice());
+        // product.setOriginalPrice(request.getOriginalPrice());
+        // product.setSalePrice(request.getSalePrice());
+        // product.setImportPrice(request.getImportPrice());
         product.setPromotions(request.getPromotions());
         product.setStock(request.getStock() != null ? request.getStock() : 0);
         if (request.getVariants() != null && !request.getVariants().isEmpty()) {
             product.setOriginalPrice(BigDecimal.ZERO);
             product.setSalePrice(BigDecimal.ZERO);
+            product.setImportPrice(BigDecimal.ZERO);
             product.setStock(request.getStock() != null ? request.getStock() : 0);
 
         } else {
             product.setOriginalPrice(request.getOriginalPrice());
             product.setSalePrice(request.getSalePrice());
+            product.setImportPrice(request.getImportPrice());
+
         }
 
         product.setStock(request.getStock() != null ? request.getStock() : 0);
@@ -218,6 +222,8 @@ public class ProductMapper {
         variant.setSku(SkuUtil.generateSku(variantIdentifier));
         variant.setOriginalPrice(request.getOriginalPrice());
         variant.setSalePrice(request.getSalePrice());
+        variant.setImportPrice(request.getImportPrice());
+
         variant.setStockQuantity(request.getStock());
         variant.setDisplayOrder(request.getDisplayOrder());
         variant.setProduct(product);
@@ -234,6 +240,8 @@ public class ProductMapper {
         dto.setSpecification(product.getSpecification());
         dto.setOriginalPrice(product.getOriginalPrice());
         dto.setSalePrice(product.getSalePrice());
+        dto.setImportPrice(product.getImportPrice());
+
         dto.setPromotions(product.getPromotions());
         dto.setStock(product.getStock());
         dto.setSold(product.getSold());
@@ -350,6 +358,10 @@ public class ProductMapper {
             variant.setSalePrice(request.getSalePrice());
         }
 
+        if (request.getImportPrice() != null) {
+            variant.setImportPrice(request.getImportPrice());
+        }
+
         if (request.getStock() != null) {
             variant.setStockQuantity(request.getStock());
         }
@@ -383,6 +395,7 @@ public class ProductMapper {
         dto.setSize(variant.getSize());
         dto.setOriginalPrice(variant.getOriginalPrice());
         dto.setSalePrice(variant.getSalePrice());
+        dto.setImportPrice(variant.getImportPrice());
         dto.setStockQuantity(variant.getStockQuantity());
         dto.setDisplayOrder(variant.getDisplayOrder());
         dto.setCreatedAt(variant.getCreatedAt());

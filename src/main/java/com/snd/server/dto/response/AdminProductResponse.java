@@ -25,6 +25,8 @@ public class AdminProductResponse extends BaseResponse {
     String promotions;
     BigDecimal originalPrice;
     BigDecimal salePrice;
+    BigDecimal importPrice;
+
     Integer stock;
 
     Integer sold;

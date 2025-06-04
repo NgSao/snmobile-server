@@ -32,6 +32,12 @@ public class ProductRequest {
     @Positive(message = "Giá bán phải lớn hơn 0")
     BigDecimal salePrice;
 
+    @NotNull(message = "Giá nhập không được để trống")
+    @Positive(message = "Giá nhập phải lớn hơn 0")
+    BigDecimal importPrice;
+
+    String note;
+
     Long brandId;
 
     Integer stock;
@@ -43,6 +49,9 @@ public class ProductRequest {
     public void validatePrices() {
         if (salePrice != null && originalPrice != null && salePrice.compareTo(originalPrice) > 0) {
             throw new AppException("Giá bán không được lớn hơn giá gốc");
+        }
+        if (importPrice != null && salePrice != null && importPrice.compareTo(salePrice) > 0) {
+            throw new AppException("Giá nhập không được lớn hơn giá bán");
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.snd.server.event.domain;
 
+import java.math.BigDecimal;
+
 import com.snd.server.event.EventType;
 
 import lombok.*;
@@ -16,4 +18,5 @@ public class InventoryEvent {
     String skuProduct;
     String skuVariant;
     Integer quantity;
+    BigDecimal price;
 }

@@ -1,8 +1,11 @@
 package com.snd.server.dto.response;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,24 +15,13 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class VariantResponse extends BaseResponse {
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class InventoryResponse extends BaseResponse {
     Long id;
-    String color;
-
-    String size;
-
-    String sku;
-    String slug;
-
-    String imageUrl;
-
-    BigDecimal originalPrice;
-
-    BigDecimal salePrice;
+    String skuProduct;
+    String skuVariant;
+    Integer quantity;
     BigDecimal importPrice;
-    Integer stockQuantity;
-
-    Integer displayOrder;
-
+    Instant lastUpdated;
 }

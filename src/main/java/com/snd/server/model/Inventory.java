@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 
 import jakarta.persistence.*;
@@ -25,5 +26,6 @@ public class Inventory extends BaseEntity {
     String skuProduct;
     String skuVariant;
     Integer quantity;
+    BigDecimal importPrice;
     Instant lastUpdated;
 }

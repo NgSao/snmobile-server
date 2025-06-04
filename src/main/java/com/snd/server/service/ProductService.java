@@ -133,6 +133,7 @@ public class ProductService {
                         .skuProduct(product.getSku())
                         .skuVariant(null)
                         .quantity(product.getStock())
+                        .price(product.getImportPrice())
                         .build();
                 inventoryPublisher.sendInventory(inventoryEvent);
             }
@@ -144,6 +145,7 @@ public class ProductService {
                             .skuProduct(product.getSku())
                             .skuVariant(variant.getSku())
                             .quantity(variant.getStockQuantity())
+                            .price(variant.getImportPrice())
                             .build();
                     inventoryPublisher.sendInventory(inventoryEvent);
                 } else {
@@ -166,6 +168,7 @@ public class ProductService {
                         .skuProduct(updatedProduct.getSku())
                         .skuVariant(null)
                         .quantity(request.getStock())
+                        .price(updatedProduct.getImportPrice())
                         .build();
                 inventoryPublisher.sendInventory(inventoryEvent);
             }
@@ -177,6 +180,7 @@ public class ProductService {
                             .skuProduct(updatedProduct.getSku())
                             .skuVariant(variant.getSku())
                             .quantity(variant.getStockQuantity())
+                            .price(variant.getImportPrice())
                             .build();
                     inventoryPublisher.sendInventory(inventoryEvent);
                 }
@@ -195,6 +199,7 @@ public class ProductService {
                 .skuProduct(product.getSku())
                 .skuVariant(variant.getSku())
                 .quantity(variant.getStockQuantity())
+                .price(variant.getImportPrice())
                 .build();
         inventoryPublisher.sendInventory(inventoryEvent);
         return productMapper.variantToDto(savedVariant);

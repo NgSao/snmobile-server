@@ -51,6 +51,7 @@ public class Product extends BaseEntity {
     BigDecimal originalPrice;
 
     BigDecimal salePrice;
+    BigDecimal importPrice;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")

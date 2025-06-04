@@ -11,9 +11,9 @@ import com.snd.server.model.Inventory;
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
     Optional<Inventory> findBySkuVariant(String skuVariant);
 
-    Optional<Inventory> findBySkuProductAndSkuVariantIsNull(String skuProduct);
-
     void deleteBySkuVariant(String skuVariant);
+
+    Optional<Inventory> findBySkuProductAndSkuVariantIsNull(String skuProduct);
 
     void deleteBySkuProductAndSkuVariantIsNull(String skuProduct);
 
